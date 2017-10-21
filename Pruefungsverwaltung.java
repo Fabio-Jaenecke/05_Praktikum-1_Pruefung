@@ -1,18 +1,27 @@
+import java.util.HashMap;
+
+
 /**
  * Bietet Funktionalitaeten zum Speichern von Pruefungsergebnissen von einer
  * Vielzahl von Studenten. Aus den gespeicherten Ergebnissen lassen sich
  * personalisierte Antworttext generieren.
  */
 public class Pruefungsverwaltung {
+  private HashMap<String,Double> ergebnisse = new HashMap<String, Double>();
+  private Pruefungsergebnis pruefungsergebnis;
 
   /**
-   * Speichert ein Pruefungsergebnis.
+   * Speichert ein Pruefungsergebnis. Erfasst ein Prüfungsergebnis und weist
+   * der Hashmap den Namen und dessen Note zu. Die Note wird auf 0.5 Stellen gerundet.
    * 
-   * @param ergebnis Das Pruefungsergebnis.
+   * @param student der StudentenName, der neu hinzugefügt wird.
+   * @param note die Note, die dieser Student errreicht hat.
    */
-  public void speichereErgebnis(Pruefungsergebnis ergebnis) {
-    // TODO Implementieren gemaess Aufgabenstellung
-  }
+  public void speichereErgebnis(String student, double note) {
+      Pruefungsergebnis pruefungsergebnis = new Pruefungsergebnis(student, note);
+      ergebnisse.put(pruefungsergebnis.getStudent(), rundeAufHalbeNote(pruefungsergebnis.getNote()));
+    }
+  
 
   /**
    * Gibt pro gespeichert Ergebnis einen Text auf die Konsole aus.
@@ -26,9 +35,23 @@ public class Pruefungsverwaltung {
    * erzielt und somit bestanden!
    */
   public void druckeAntworttexte() {
-    // TODO Implementieren gemaess Aufgabenstellung
+    /*
+     *  Gibt für jeden Studenten, die Note an und gibt entweder das Bestehen
+     *  oder Nichtbestehen, zusammen mit der gerundeten Note aus:
+     */ 
+   
+    for (String name : ergebnisse.keySet()){
+     if(ergebnisse.get(name) >= 4){
+        System.out.println("Herzliche Gratulation " + name + "! Sie haben an der Pruefung eine " + 
+        ergebnisse.get(name) + " erzielt und somit bestanden!");
+     } else if (ergebnisse.get(name) < 4) {
+        System.out.println(name + ", Sie haben der Pruefung eine " 
+         + ergebnisse.get(name) + " erzielt und sind somit durchgefallen");  
+     }
+    }  
   }
-
+  
+  
   private double rundeAufHalbeNote(double note) {
     return Math.round(note * 2) / 2.0;
   }

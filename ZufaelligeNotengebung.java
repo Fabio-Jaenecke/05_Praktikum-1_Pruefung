@@ -15,14 +15,14 @@ public class ZufaelligeNotengebung {
       String name = "Max Muster " + i;
       double note = generiereZufaelligePruefungsnote();
       Pruefungsergebnis pruefungsergebnis = new Pruefungsergebnis(name, note);
-      pruefungsverwaltung.speichereErgebnis(pruefungsergebnis);
+      pruefungsverwaltung.speichereErgebnis(name, note);
     }
-
     pruefungsverwaltung.druckeAntworttexte();
   }
 
   private double generiereZufaelligePruefungsnote() {
-    // TODO: Fehlenden Code hier einfuegen
-    return 0;
+    Random generator = new Random();
+    double zufallszahlen = 1 + (6 - 1) * generator.nextDouble(); //Zufalldouble zwichen 1 und 6.
+    return Math.round(zufallszahlen * 2) / 2.0; //rundet auf 0.5-Noten.
   }
 }
